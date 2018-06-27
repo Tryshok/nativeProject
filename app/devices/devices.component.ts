@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ApiService } from '../services/apiServices'
 
 import { map } from "rxjs/operators";
-import { RestProvider } from '../rest/rest'
 
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { RouterExtensions } from "nativescript-angular/router";
@@ -17,21 +16,41 @@ import { NavigationExtras } from "@angular/router";
 })
 export class DevicesComponent implements OnInit {
 
-    url: string = "http://10.113.128.158:8080/project_dev/api/metrics";
+    url: string = "https://jsonplaceholder.typicode.com/users";
+    //url: string =  "http://10.113.128.158:8080/project_dev/api/devices/users/1";
     devices: any;
     isAvailable : any
-    idDevice : any ;
+    //idDevice : any ;
 
-    constructor(private apiServices : ApiService,  private http: Http, private provider: RestProvider, private routerExtensions : RouterExtensions) { 
+    constructor(private apiServices : ApiService,  private http: Http, private routerExtensions : RouterExtensions) { 
         this.isAvailable = false;
     }
 
     ngOnInit(): void {
-        let headers = new Headers({ "Content-Type": "application/json" });
-        let options = new RequestOptions({ headers: headers });
+        this.apiServices.get(this.url).subscribe(res => {
+            this.devices = res;
+        },
+            error => {
+                console.log("error retrieving devices");
+            });
+            this.isAvailable = true;
+    }
+
+    onItemTap(args) {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+            "id": this.devices[args.index].ID
+            }
+        };
+        this.routerExtensions.navigate(['/oneDevice'], navigationExtras)
+    }
+
+
+        //let headers = new Headers({ "Content-Type": "application/json" });
+        //let options = new RequestOptions({ headers: headers });
         
-        this.http.get("http://10.113.128.158:8080/project_dev/api/devices/users/" + "1", options).pipe(map(res => res.json()))
-        //this.http.get("https://jsonplaceholder.typicode.com/users", options).pipe(map(res => res))
+        //this.http.get("http://10.113.128.158:8080/project_dev/api/devices/users/" + "1", options).pipe(map(res => res.json()))
+      /*  this.http.get("https://jsonplaceholder.typicode.com/users", options).pipe(map(res => res.json()))
         .subscribe(res => {
             
             this.devices = res;
@@ -41,29 +60,11 @@ export class DevicesComponent implements OnInit {
             error => {
                 console.log("error retrieving devices");
             });
-            this.isAvailable = true;
+            this.isAvailable = true;*/
 
-        /*this.http.get("https://jsonplaceholder.typicode.com/users", options).pipe(map(res => res))
-        .subscribe(res => {
-            console.log("RES:" + JSON.stringify(res));
-        // this.devices = res;
-        // console.log(this.devices);
-        },
-            error => {
-                console.log("error retrieving devices");
-            });*/
-    }
-
-    onItemTap(args) {
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-            "id": this.devices[args.index].ID
-            }
-        };
         
-        this.routerExtensions.navigate(['/oneDevice'], navigationExtras)
-    }
 
+    
   /*  public onItemTap(args) {
         let navigationExtras: NavigationExtras = {
         queryParams: {
@@ -112,13 +113,7 @@ export class DevicesComponent implements OnInit {
 
     
 
-    /*this.apiServices.get(this.url, this.options).subscribe(res => {
-            console.log("RES:" + JSON.stringify(res));
-            this.devices = res;
-        },
-            error => {
-                console.log("error retrieving devices");
-            });*/
+    
 
 
     

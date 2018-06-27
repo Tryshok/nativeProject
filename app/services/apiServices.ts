@@ -9,9 +9,9 @@ export class ApiService {
         private http: Http
     ) { }
 
-    get(url: string, headers: Headers) {
-        let options = new RequestOptions({ headers: headers });
-        return this.http.get(url, options).pipe(map(res => res));
+    get(url: string) {
+        //let options = new RequestOptions({ headers: headers });
+        return this.http.get(url).pipe(map(res => res.json()));
     }
 
    /* get(url: string) {

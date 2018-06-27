@@ -8,13 +8,15 @@
 </ActionBar>
 
 <StackLayout class="p-30">
-     <Label style="color:black;" text="Devices associated :" ></Label>
+     <Label style="color:black; font-size: 20px;" text="Devices associated :" ></Label>
      <br>
      <ListView *ngIf="isAvailable" [items]="devices" (itemTap)="onItemTap($event)">
         <ng-template let-item="item">
             <GridLayout class="list-group-item">
-                <Label left="10" top="10" width="90" height="90" [text]="item.ID" ></Label>
+                <!--<Label left="10" top="10" width="90" height="90" [text]="item.ID" ></Label>-->
+                <Label style="margin-top: 30%; font-size: 18px;"  height="70" [text]="item.name" ></Label>
             </GridLayout>
         </ng-template>
     </ListView>
 </StackLayout>
+

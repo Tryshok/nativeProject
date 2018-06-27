@@ -8,7 +8,6 @@ import { AppComponent } from "./app.component";
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ApiService } from './services/apiServices'
-import { RestProvider } from './rest/rest'
 
 import { NativeScriptHttpModule } from "nativescript-angular/http";
 
@@ -30,7 +29,6 @@ import { NativeScriptHttpModule } from "nativescript-angular/http";
     ],
     providers :[
         ApiService,
-        RestProvider
     ],
     schemas: [
         NO_ERRORS_SCHEMA
