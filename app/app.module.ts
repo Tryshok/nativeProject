@@ -8,6 +8,9 @@ import { AppComponent } from "./app.component";
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ApiService } from './services/apiServices'
+import { RestProvider } from './rest/rest'
+
+import { NativeScriptHttpModule } from "nativescript-angular/http";
 
 
 @NgModule({
@@ -19,13 +22,15 @@ import { ApiService } from './services/apiServices'
         NativeScriptModule,
         NativeScriptUISideDrawerModule,
         HttpClientModule,
-        HttpModule
+        HttpModule,
+        NativeScriptHttpModule
     ],
     declarations: [
         AppComponent
     ],
     providers :[
-        ApiService
+        ApiService,
+        RestProvider
     ],
     schemas: [
         NO_ERRORS_SCHEMA

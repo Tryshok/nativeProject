@@ -11,11 +11,16 @@ export class ApiService {
 
     get(url: string, headers: Headers) {
         let options = new RequestOptions({ headers: headers });
-        return this.http.get(url, options).pipe(map(res => res.json()));
+        return this.http.get(url, options).pipe(map(res => res));
     }
 
-    post(url: string, headers: Headers, body: object) {
+   /* get(url: string) {
+        //let options = new RequestOptions({ headers: headers });
+        return this.http.get(url).pipe(map(res => res));
+    }*/
+
+    /*post(url: string, headers: Headers, body: object) {
         let options = new RequestOptions({ headers: headers });
         return this.http.post(url, body, options);
-    }
+    }*/
 }

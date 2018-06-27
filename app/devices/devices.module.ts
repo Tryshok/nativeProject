@@ -4,8 +4,6 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { DevicesRoutingModule } from "./devices-routing.module";
 import { DevicesComponent } from "./devices.component";
 
-import { RestProvider } from '../rest/rest';
-
 
 @NgModule({
     imports: [
@@ -16,7 +14,6 @@ import { RestProvider } from '../rest/rest';
         DevicesComponent
     ],
     providers: [
-        RestProvider
       ],
     schemas: [
         NO_ERRORS_SCHEMA

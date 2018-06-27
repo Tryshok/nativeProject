@@ -50,20 +50,11 @@ export class HomeComponent implements OnInit {
     
     public onTapLogout() {
         tnsOAuthModule.logout()
-            .then(() => console.log('logged out'),
-            topmost().navigate({
-                moduleName: "./devices/devices"
-              }))
-            .catch((er) => {
-                console.error('error logging out');
-                console.dir(er);
-            });
+            .then(() => {
+                console.log('logged out');
+                this.routerExtensions.navigate(['/home']);
+                })
     }
-
-    public authcallback() {
-        console.log('yay callback');
-    }
-
     
     
 }
