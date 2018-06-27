@@ -6,6 +6,7 @@ import { RestProvider } from '../rest/rest'
 
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { RouterExtensions } from "nativescript-angular/router";
+import { NavigationExtras } from "@angular/router";
 
 
 
@@ -19,6 +20,7 @@ export class DevicesComponent implements OnInit {
     url: string = "http://10.113.128.158:8080/project_dev/api/metrics";
     devices: any;
     isAvailable : any
+    idDevice : any ;
 
     constructor(private apiServices : ApiService,  private http: Http, private provider: RestProvider, private routerExtensions : RouterExtensions) { 
         this.isAvailable = false;
@@ -33,7 +35,6 @@ export class DevicesComponent implements OnInit {
         .subscribe(res => {
             
             this.devices = res;
-            console.log(this.devices);
            // console.log("RES:" + JSON.stringify(res));
             
         },
@@ -53,10 +54,24 @@ export class DevicesComponent implements OnInit {
             });*/
     }
 
-    metricsOfDevice() {
-        console.log("Device en particulier");
-        this.routerExtensions.navigate(['/home']);
+    onItemTap(args) {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+            "id": this.devices[args.index].ID
+            }
+        };
+        
+        this.routerExtensions.navigate(['/oneDevice'], navigationExtras)
     }
+
+  /*  public onItemTap(args) {
+        let navigationExtras: NavigationExtras = {
+        queryParams: {
+        "id": this.devices[args.index].id,
+        "name": this.devices[args.index].name
+        }
+        };
+        this._router.navigate(['deviceProfile'], navigationExtras*/
 
     /*showDevices(){
         console.log("showDevices");

@@ -1,0 +1,16 @@
+<ActionBar class="action-bar">
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="Calculated Data Of 1 Device"></Label>
+</ActionBar>
+
+<StackLayout >
+     <Label style="color:black;" text="Specific Calculated Data :" ></Label>
+     <br>
+     <Label style="color:black;" [text]="' calculationType : ' + idDevice.calculationType" ></Label>
+     <Label style="color:black;" [text]="' date : ' + idDevice.date" ></Label>
+     <Label style="color:black;" [text]="' unit : ' + idDevice.unit" ></Label>
+     <Label style="color:black;" [text]="' value : ' + idDevice.value" ></Label>
+     <br>
+</StackLayout>

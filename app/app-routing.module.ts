@@ -10,6 +10,8 @@ const routes: Routes = [
     { path: "featured", loadChildren: "./featured/featured.module#FeaturedModule" },
     { path: "settings", loadChildren: "./settings/settings.module#SettingsModule" },
     { path: "devices", loadChildren: "./devices/devices.module#DevicesModule" },
+    { path: "oneDevice", loadChildren: "./oneDevice/oneDevice.module#OneDeviceModule" },
+    { path: "calculatedData", loadChildren: "./calculatedData/calculatedData.module#CalculatedDataModule" },
 ];
 
 @NgModule({
