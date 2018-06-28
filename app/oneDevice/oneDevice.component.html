@@ -7,7 +7,9 @@
 
 <StackLayout class="p-30">
     
-    <Button text="Send A Command" (tap)="onTapCommand()" class="btn btn-primary btn-active"></Button>
+    <Button *ngIf="ifOffline" style="background-color: green; color: black;" text="Online" (tap)="onTapCommandOn()" class="btn btn-primary btn-active"></Button>
+    <Button *ngIf="ifOnline" style="background-color: red; color: black;" text="Offline" (tap)="onTapCommandOff()" class="btn btn-primary btn-active"></Button>
+    <Button text="Calculated Graph" (tap)="onTapGoToGraph()" class="btn btn-primary btn-active"></Button>
     <br>
     <Label style="color:black; font-size: 20px;" text="Last Raw Data :" ></Label>
     <br>

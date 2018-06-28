@@ -19,7 +19,7 @@ export class ApiService {
         return this.http.get(url).pipe(map(res => res));
     }*/
 
-    post(url: string, body: string) {
+    post(url: string, body: any) {
         //let options = new RequestOptions({ headers: headers });
         let options = this.createRequestOptions();
         return this.http.post(url, body, options);

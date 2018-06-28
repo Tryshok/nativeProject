@@ -12,6 +12,7 @@ const routes: Routes = [
     { path: "devices", loadChildren: "./devices/devices.module#DevicesModule" },
     { path: "oneDevice", loadChildren: "./oneDevice/oneDevice.module#OneDeviceModule" },
     { path: "calculatedData", loadChildren: "./calculatedData/calculatedData.module#CalculatedDataModule" },
+    { path: "graphics", loadChildren: "./graphics/graphics.module#GraphicsModule" },
 ];
 
 @NgModule({

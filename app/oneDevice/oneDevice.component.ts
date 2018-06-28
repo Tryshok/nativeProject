@@ -19,6 +19,11 @@ export class OneDeviceComponent implements OnInit {
     rawDataAvailable : any;
     metricsAvailable : any;
     userName : any;
+    statutCommand: any;
+    url: any;
+    response : any;
+    ifOffline: any;
+    ifOnline: any;
 
     constructor(private apiServices : ApiService, private routerExtensions : RouterExtensions, private route: ActivatedRoute) { 
         this.metricsAvailable = false;
@@ -30,6 +35,8 @@ export class OneDeviceComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.ifOffline = true;
+        this.ifOnline = true;
         this.urlRawData = "http://10.113.128.158:8080/project_dev/api/devices/" + this.idDevice +"/lastmetric";
         this.urlCalculatedData =  "http://10.113.128.158:8080/project_dev/api/calculatedmetrics?id_device=" + this.idDevice;
         
@@ -60,26 +67,40 @@ export class OneDeviceComponent implements OnInit {
         this.routerExtensions.navigate(['/calculatedData'], navigationExtras)
     }
 
-    onTapCommand(){
-        console.log("Command Sent to device : " + this.idDevice);
-        /*this.url = "http://10.113.128.158:8080/project_dev/api/devices/token/";
-            
-            this.apiServices.post(this.url, "\""+token+"\"").subscribe(res => {
+    onTapCommandOn(){
+        this.url = "http://10.113.128.158:8080/project_dev/api/devices/command/" + this.idDevice;
+            this.statutCommand = "true";
+            this.apiServices.post(this.url, this.statutCommand).subscribe(res => {
                 this.response = res.json();
-                if(this.response.ID != 0){
-                    let navigationExtras: NavigationExtras = {
-                        queryParams: {
-                        "id": this.response.ID
-                        }
-                    };
-                    this.routerExtensions.navigate(['/devices'], navigationExtras)                    
-                } else {
-                    console.log("User unauthorized");
-                }
+                this.ifOffline = false;
+                this.ifOnline = true;
             },
                 error => {
                     console.log(error);
-                });*/
+                });
+    }
+
+    onTapCommandOff(){
+        this.url = "http://10.113.128.158:8080/project_dev/api/devices/command/" + this.idDevice;
+            this.statutCommand = "false";
+            this.apiServices.post(this.url, this.statutCommand).subscribe(res => {
+                this.response = res.json();
+                this.ifOffline = true;
+                this.ifOnline = false;
+            },
+                error => {
+                    console.log(error);
+                });
+    }
+
+    onTapGoToGraph(){
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+            "id": this.idDevice,
+            "userName" : this.userName
+            }
+        };
+        this.routerExtensions.navigate(['/graphics'], navigationExtras);
     }
 
     logOut(){
