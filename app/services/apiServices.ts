@@ -21,6 +21,14 @@ export class ApiService {
 
     post(url: string, body: string) {
         //let options = new RequestOptions({ headers: headers });
-        return this.http.post(url, body);
+        let options = this.createRequestOptions();
+        return this.http.post(url, body, options);
+    }
+
+    private createRequestOptions() {
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let options = new RequestOptions({ headers: headers });
+        return options;
     }
 }

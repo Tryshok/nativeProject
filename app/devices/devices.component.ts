@@ -15,18 +15,18 @@ export class DevicesComponent implements OnInit {
     devices: any;
     isAvailable : any ;
     idDevice : any ;
+    userName : any;
 
     constructor(private apiServices : ApiService, private routerExtensions : RouterExtensions, private route : ActivatedRoute) { 
         this.isAvailable = false;
-//test
-        /*this.route.queryParams.subscribe((params) => {
-            this.idDevice = params["ID"];
-        });*/
+        this.route.queryParams.subscribe((params) => {
+            this.idDevice = params["id"];
+            this.userName = params["userName"];
+        });
     }
 
     ngOnInit(): void {
-        //this.url =  "http://10.113.128.158:8080/project_dev/api/devices/users/" + this.idDevice;
-        this.url =  "http://10.113.128.158:8080/project_dev/api/devices/users/1";
+        this.url =  "http://10.113.128.158:8080/project_dev/api/devices/users/" + this.idDevice;
         this.apiServices.get(this.url).subscribe(res => {
             this.devices = res;
         },
@@ -39,7 +39,8 @@ export class DevicesComponent implements OnInit {
     onItemTap(args) {
         let navigationExtras: NavigationExtras = {
             queryParams: {
-            "id": this.devices[args.index].ID
+            "id": this.devices[args.index].ID,
+            "userName" : this.userName
             }
         };
         this.routerExtensions.navigate(['/oneDevice'], navigationExtras)

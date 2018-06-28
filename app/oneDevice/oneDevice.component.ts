@@ -18,12 +18,14 @@ export class OneDeviceComponent implements OnInit {
     allCalculatedData : any ;
     rawDataAvailable : any;
     metricsAvailable : any;
+    userName : any;
 
     constructor(private apiServices : ApiService, private routerExtensions : RouterExtensions, private route: ActivatedRoute) { 
         this.metricsAvailable = false;
         this.rawDataAvailable = false;
         this.route.queryParams.subscribe((params) => {
         this.idDevice = params["id"];
+        this.userName = params["userName"];
         });
     }
 
@@ -51,7 +53,8 @@ export class OneDeviceComponent implements OnInit {
     onItemTapOneDevice(args) {
         let navigationExtras: NavigationExtras = {
             queryParams: {
-            "id": this.allCalculatedData[args.index].id
+            "id": this.allCalculatedData[args.index].id,
+            "userName" : this.userName
             }
         };
         this.routerExtensions.navigate(['/calculatedData'], navigationExtras)
@@ -60,14 +63,22 @@ export class OneDeviceComponent implements OnInit {
     onTapCommand(){
         console.log("Command Sent to device : " + this.idDevice);
         /*this.url = "http://10.113.128.158:8080/project_dev/api/devices/token/";
-            this.msg = {"token" : token};
-            this.apiServices.post(this.url, this.msg).subscribe(res => {
-                console.log("réponse Olive");
+            
+            this.apiServices.post(this.url, "\""+token+"\"").subscribe(res => {
                 this.response = res.json();
-                console.log(this.response);
+                if(this.response.ID != 0){
+                    let navigationExtras: NavigationExtras = {
+                        queryParams: {
+                        "id": this.response.ID
+                        }
+                    };
+                    this.routerExtensions.navigate(['/devices'], navigationExtras)                    
+                } else {
+                    console.log("User unauthorized");
+                }
             },
                 error => {
-                    console.log("error retrieving devices");
+                    console.log(error);
                 });*/
     }
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Http } from "@angular/http";
 import { RouterExtensions } from "nativescript-angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from '../services/apiServices'
@@ -16,11 +15,13 @@ export class CalculatedDataComponent implements OnInit {
     calculatedData : any;
     idDevice : any;
     urlCalculatedData : any;
+    userName : any;
 
-    constructor(private http: Http, private apiServices : ApiService, private routerExtensions : RouterExtensions, private route: ActivatedRoute) { 
+    constructor(private apiServices : ApiService, private routerExtensions : RouterExtensions, private route: ActivatedRoute) { 
         this.calculatedDataAvailable = false;
         this.route.queryParams.subscribe((params) => {
             this.idDevice = params["id"];
+            this.userName = params["userName"];
         });
     }
 
@@ -29,7 +30,6 @@ export class CalculatedDataComponent implements OnInit {
 
         this.apiServices.get(this.urlCalculatedData).subscribe(res => {
             this.calculatedData = res;
-            console.log(this.calculatedData);
         },
             error => {
                 console.log("error retrieving devices");

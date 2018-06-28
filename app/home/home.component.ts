@@ -97,6 +97,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as tnsOAuthModule from 'nativescript-oauth';
 import { RouterExtensions } from "nativescript-angular/router";
 import { ApiService } from '~/services/apiServices';
+import { NavigationExtras } from "@angular/router";
 
 @Component({
     selector: "Home",
@@ -108,6 +109,7 @@ export class HomeComponent implements OnInit {
 
     url: any;
     response: any;
+    response2 : any;
     msg : any;
 
     constructor(private routerExtensions: RouterExtensions, private apiServices : ApiService) {
@@ -125,26 +127,30 @@ export class HomeComponent implements OnInit {
         tnsOAuthModule.login()
         .then(( token: string )=>{
             token = tnsOAuthModule.accessToken();
+
             this.url = "http://10.113.128.158:8080/project_dev/api/devices/token/";
-            this.msg = {"token" : token};
-            this.apiServices.post(this.url, this.msg).subscribe(res => {
-                console.log("réponse Olive");
+
+            this.apiServices.post(this.url, "\""+token+"\"").subscribe(res => {
                 this.response = res.json();
-                console.log(this.response);
+                if(this.response.ID != 0){
+                    let navigationExtras: NavigationExtras = {
+                        queryParams: {
+                        "id": this.response.ID,
+                        "userName" : this.response.Name
+                        }
+                    };
+                    this.routerExtensions.navigate(['/devices'], navigationExtras)                    
+                } else {
+                    console.log("User unauthorized");
+                }
             },
                 error => {
-                    console.log("error retrieving devices");
+                    console.log(error);
                 });
-            this.routerExtensions.navigate(['/devices'], {
-                transition: {
-                    name: "fade"
-                }
-            });
             const sideDrawer = <RadSideDrawer>app.getRootView();
             sideDrawer.closeDrawer();
         })
         .catch((er)=>{
-            console.log("nico erreur");
             console.log(er);
         });
     }
