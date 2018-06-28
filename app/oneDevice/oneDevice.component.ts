@@ -1,16 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Http, Headers, RequestOptions } from "@angular/http";
+import { ApiService } from '../services/apiServices'
 import { RouterExtensions } from "nativescript-angular/router";
-import { map } from "rxjs/operators";
-import { NavigationExtras } from "@angular/router";
-import { ActivatedRoute } from "@angular/router";
-
-/* ***********************************************************
-* Before you can navigate to this page from your app, you need to reference this page's module in the
-* global app router module. Add the following object to the global array of routes:
-* { path: "oneDevice", loadChildren: "./oneDevice/oneDevice.module#OneDeviceModule" }
-* Note that this simply points the path to the page module file. If you move the page, you need to update the route too.
-*************************************************************/
+import { NavigationExtras, ActivatedRoute } from "@angular/router";
+import * as tnsOAuthModule from 'nativescript-oauth';
 
 @Component({
     selector: "OneDevice",
@@ -19,50 +11,41 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class OneDeviceComponent implements OnInit {
 
+    idDevice : any;
+    urlCalculatedData: any;
+    urlRawData: any;
     lastRawData : any ;
     allCalculatedData : any ;
     rawDataAvailable : any;
     metricsAvailable : any;
-    calculatedDataId : any;
-    navigationExtras: NavigationExtras ;
-    calculatedCustom : any;
-    idDevice : any;
 
-    constructor(private http: Http, private routerExtensions : RouterExtensions, private route: ActivatedRoute) { 
+    constructor(private apiServices : ApiService, private routerExtensions : RouterExtensions, private route: ActivatedRoute) { 
         this.metricsAvailable = false;
         this.rawDataAvailable = false;
-
         this.route.queryParams.subscribe((params) => {
         this.idDevice = params["id"];
         });
     }
 
     ngOnInit(): void {
-        let headers = new Headers({ "Content-Type": "application/json" });
-        let options = new RequestOptions({ headers: headers });
+        this.urlRawData = "http://10.113.128.158:8080/project_dev/api/devices/" + this.idDevice +"/lastmetric";
+        this.urlCalculatedData =  "http://10.113.128.158:8080/project_dev/api/calculatedmetrics?id_device=" + this.idDevice;
         
-        //LAST RAW DATA
-        this.http.get("http://10.113.128.158:8080/project_dev/api/devices/"+ this.idDevice +"/lastmetric" , options).pipe(map(res => res.json()))
-        .subscribe(res => {
+        this.apiServices.get(this.urlCalculatedData).subscribe(res => {
+            this.allCalculatedData = res;
+        },
+            error => {
+                console.log("error retrieving devices");
+            });
+            this.metricsAvailable = true;
+
+        this.apiServices.get(this.urlRawData).subscribe(res => {
             this.lastRawData = res;
         },
             error => {
-                console.log("error retrieving metric data");
+                console.log("error retrieving devices");
             });
-            this.rawDataAvailable= true;
-
-        //ALL CALCULATED DATA
-        this.http.get("http://10.113.128.158:8080/project_dev/api/calculatedmetrics" , options).pipe(map(res => res.json()))
-        .subscribe(res => {
-            this.allCalculatedData = res;
-            console.log("allCalculatedData");
-            console.log(this.allCalculatedData);
-            this.metricsAvailable = true;
-        },
-            error => {
-                console.log("error retrieving metric data");
-            });
-            
+            this.rawDataAvailable = true;
     }
 
     onItemTapOneDevice(args) {
@@ -71,19 +54,28 @@ export class OneDeviceComponent implements OnInit {
             "id": this.allCalculatedData[args.index].id
             }
         };
-        console.log("navigationExtras");
-        console.log(navigationExtras);
         this.routerExtensions.navigate(['/calculatedData'], navigationExtras)
     }
 
-    
+    onTapCommand(){
+        console.log("Command Sent to device : " + this.idDevice);
+        /*this.url = "http://10.113.128.158:8080/project_dev/api/devices/token/";
+            this.msg = {"token" : token};
+            this.apiServices.post(this.url, this.msg).subscribe(res => {
+                console.log("réponse Olive");
+                this.response = res.json();
+                console.log(this.response);
+            },
+                error => {
+                    console.log("error retrieving devices");
+                });*/
+    }
 
-    
-/*
-    showCalculatedData(calculatedDataId){
-
-         var navigationOptions= {param1: calculatedDataId};
-    
-        this.routerExtensions.navigate(['/calculatedData'], navigationOptions);
-    }*/
+    logOut(){
+        tnsOAuthModule.logout()
+            .then(() => {
+                console.log('logged out');
+                this.routerExtensions.navigate(['/home']);
+                })
+    }
 }

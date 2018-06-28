@@ -1,26 +1,28 @@
 <ActionBar class="action-bar">
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    <ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" (tap)="logOut()"
+    ios.position="right">
     </ActionItem>
     <Label class="action-bar-title" text="One Device"></Label>
 </ActionBar>
 
-<StackLayout >
-     <Label style="color:black;" text="Last Raw Data :" ></Label>
-     <br>
-     <Label *ngIf="rawDataAvailable" style="color:black;" [text]="' ID : ' + lastRawData.ID" ></Label>
-     <Label *ngIf="rawDataAvailable" style="color:black;" [text]="' Value : ' + lastRawData.Value" ></Label>
-     <br>
-
-     <br>
-     <br>
-
-     <Label style="color:black;" text="Last Calculated Data :" ></Label>
+<StackLayout class="p-30">
+    
+    <Button text="Send A Command" (tap)="onTapCommand()" class="btn btn-primary btn-active"></Button>
+    <br>
+    <Label style="color:black; font-size: 20px;" text="Last Raw Data :" ></Label>
+    <br>
+    <div *ngIf="rawDataAvailable">
+        <Label style="font-size: 14px;" width="100%" height="30" text="ID : {{ lastRawData.ID }}"></Label>
+        <Label style="font-size: 14px;" width="100%" height="30" text="Value : {{ lastRawData.Value }}"></Label>
+    </div>
+    <br>
+    <br>
+     <Label style="color:black; font-size: 20px;" text="Last Calculated Data :" ></Label>
      <br>
      <ListView *ngIf="metricsAvailable" [items]="allCalculatedData" (itemTap)="onItemTapOneDevice($event)">
         <ng-template let-item="item">
             <GridLayout class="list-group-item">
-                <Label width="100%" height="90" [text]="' calculationType : ' + item.calculationType" ></Label>
+                <Label style="font-size: 14px;" width="100%" height="90" [text]="' calculationType : ' + item.calculationType" ></Label>
             </GridLayout>
         </ng-template>
     </ListView>

@@ -1,8 +1,6 @@
-
-
 <ActionBar class="action-bar">
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    <ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" (tap)="logOut()"
+    ios.position="right">
     </ActionItem>
     <Label class="action-bar-title" text="Devices"></Label>
 </ActionBar>
@@ -14,7 +12,7 @@
         <ng-template let-item="item">
             <GridLayout class="list-group-item">
                 <!--<Label left="10" top="10" width="90" height="90" [text]="item.ID" ></Label>-->
-                <Label style="margin-top: 30%; font-size: 18px;"  height="70" [text]="item.name" ></Label>
+                <Label style="margin-top: 30%; font-size: 18px;"  height="70" [text]="item.ID" ></Label>
             </GridLayout>
         </ng-template>
     </ListView>

@@ -1,16 +1,16 @@
 <ActionBar class="action-bar">
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    <ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" (tap)="logOut()"
+    ios.position="right">
     </ActionItem>
     <Label class="action-bar-title" text="Calculated Data Of 1 Device"></Label>
 </ActionBar>
 
-<StackLayout >
-     <Label style="color:black;" text="Specific Calculated Data :" ></Label>
+<StackLayout class="p-30">
+     <Label style="color:black; font-size: 20px;" text="Specific Calculated Data :" ></Label>
      <br>
-     <Label style="color:black;" [text]="' calculationType : ' + idDevice.calculationType" ></Label>
-     <Label style="color:black;" [text]="' date : ' + idDevice.date" ></Label>
-     <Label style="color:black;" [text]="' unit : ' + idDevice.unit" ></Label>
-     <Label style="color:black;" [text]="' value : ' + idDevice.value" ></Label>
-     <br>
+     <Label style="font-size: 14px;" width="100%" height="30" text="calculationType : {{ calculatedData.calculationType }}"></Label>
+     <Label style="font-size: 14px;" width="100%" height="30" text="date : {{ calculatedData.date }}"></Label>
+     <Label style="font-size: 14px;" width="100%" height="30" text="unit : {{ calculatedData.unit }}"></Label>
+     <Label style="font-size: 14px;" width="100%" height="30" text="value : {{ calculatedData.value }}"></Label>
+    <br>
 </StackLayout>
