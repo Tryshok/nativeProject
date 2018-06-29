@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ApiService } from './services/apiServices'
 
-//import { NativeScriptHttpModule } from "nativescript-angular/http";
+import { NativeScriptHttpModule } from "nativescript-angular/http";
 //import { NativeScriptUIChartModule } from "nativescript-ui-chart/angular";
 //import { NativeScriptUIChartModule } from "nativescript-pro-ui/chart/angular";
 //import * as chartModule from "nativescript-ui-chart";
@@ -29,9 +29,7 @@ import { ApiService } from './services/apiServices'
         NativeScriptUISideDrawerModule,
         HttpClientModule,
         HttpModule,
-        //NativeScriptHttpModule,
-        //GraphicsModule
-        //NativeScriptUIChartModule
+        NativeScriptHttpModule,
     ],
     declarations: [
         AppComponent,

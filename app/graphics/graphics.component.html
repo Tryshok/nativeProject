@@ -6,15 +6,18 @@
 </ActionBar>
 
 <StackLayout class="page">
-    <Label style="font-size: 14px;" width="100%" height="30" text="test"></Label>
-
     <RadCartesianChart tkExampleTitle tkToggleNavButton>
         <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
         <LinearAxis tkCartesianVerticalAxis></LinearAxis>
-        <LineSeries tkCartesianSeries [items]="allCalculatedData" categoryProperty="Time" valueProperty="Value"></LineSeries>
+        <LineSeries tkCartesianSeries [items]="allCalculatedData" categoryProperty="time" valueProperty="value"></LineSeries>
     </RadCartesianChart>
-
-    
 </StackLayout>
+<!--
+<RadCartesianChart tkExampleTitle tkToggleNavButton>
+        <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
+        <LinearAxis tkCartesianVerticalAxis></LinearAxis>
+        <LineSeries tkCartesianSeries [items]="allCalculatedData" categoryProperty="date" valueProperty="value"></LineSeries>
+    </RadCartesianChart>
+-->
 
 

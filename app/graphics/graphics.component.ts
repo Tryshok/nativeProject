@@ -32,6 +32,7 @@ export class GraphicsComponent implements OnInit {
         
         this.apiServices.get(this.urlCalculatedData).subscribe(res => {
             this.allCalculatedData = res;
+            console.log(this.allCalculatedData);
         },
             error => {
                 console.log("error retrieving devices");
