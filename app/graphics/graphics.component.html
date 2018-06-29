@@ -9,15 +9,8 @@
     <RadCartesianChart tkExampleTitle tkToggleNavButton>
         <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
         <LinearAxis tkCartesianVerticalAxis></LinearAxis>
-        <LineSeries tkCartesianSeries [items]="allCalculatedData" categoryProperty="time" valueProperty="value"></LineSeries>
+        <LineSeries tkCartesianSeries [items]="allCalculatedData" categoryProperty="date" valueProperty="value">
+        </LineSeries>
     </RadCartesianChart>
 </StackLayout>
-<!--
-<RadCartesianChart tkExampleTitle tkToggleNavButton>
-        <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
-        <LinearAxis tkCartesianVerticalAxis></LinearAxis>
-        <LineSeries tkCartesianSeries [items]="allCalculatedData" categoryProperty="date" valueProperty="value"></LineSeries>
-    </RadCartesianChart>
--->
-
 
